@@ -8,7 +8,7 @@ RUN apt update && \
     apt install -y build-essential autoconf automake autotools-dev libtool pkg-config curl git xz-utils cython3 nasm \
     yasm libtool pkg-config libfftw3-dev libpng-dev libsndfile1-dev libxvidcore-dev libbluray-dev zlib1g-dev \
     libopencv-dev ocl-icd-libopencl1 opencl-headers libboost-filesystem-dev libboost-system-dev ffmpeg python3 \
-    python3-pip ninja-build meson && \
+    python3-pip ninja-build meson libvulkan-dev cmake glslang-dev glslang-tools && \
     pip3 -q install pip --upgrade && \
     pip3 install jupyter && \
     pip install yuuno && \
@@ -36,7 +36,13 @@ RUN git clone https://github.com/vapoursynth/vapoursynth.git /usr/src/vapoursynt
 #vapoursyth-plugins
 RUN git clone --recurse-submodules -j8 https://github.com/Letsplaybar/vapoursynth-plugins.git /usr/src/vapoursynth-plugins && \
     cd /usr/src/vapoursynth-plugins && \
-    make -j4
+    make -j4 && make install
+
+#install VSGAN
+RUN pip3 install vsgan
+
+#remove src to make image smaler
+RUN rm -r /usr/src/*
 
 WORKDIR /jupyter
 
