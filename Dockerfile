@@ -29,7 +29,7 @@ RUN git clone https://github.com/vapoursynth/vapoursynth.git /usr/src/vapoursynt
     cd /usr/src/vapoursynth && \
     git checkout tags/R57 && \
     ./autogen.sh && \
-    ./configure && \
+    ./configure -enable-plugins && \
     make -j4 && \
     make install
 
